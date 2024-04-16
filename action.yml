@@ -1,21 +1,20 @@
-name: coffeebeanslabs\hello-world
-description: Greet someone and record the time
-author: Coffeebeans Labs
+name: 'AWS Action To Invoke Lambda By CoffeeBeansLabs'
+description: This action is to invoke lambda with payload
+author: CoffeeBeansLabs
 
 # Define your inputs here.
 inputs:
-  who-to-greet:
-    description: Who to greet
+  lambda-name:
+    description: Name of the lambda
     required: true
-    default: World
-
-# Define your outputs here.
-outputs:
-  time:
-    description: The time we greeted you
+  payload:
+    description: Payload in json structure or key value pairs like env.
+    required: true
+    default: '{}'
 
 runs:
   using: docker
   image: Dockerfile
   env:
-    INPUT_WHO_TO_GREET: ${{ inputs.who-to-greet }}
+    INPUT_LAMBDA_NAME: ${{ inputs.lambda-name }}
+    INPUT_PAYLOAD: ${{ inputs.payload }}
