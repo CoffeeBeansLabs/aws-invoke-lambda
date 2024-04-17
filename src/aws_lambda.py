@@ -11,7 +11,11 @@ def run(aws_parameters: dict[str, AwsParameter], input_lambda_name):
     #                            aws_access_key=os.getenv('AWS_ACCESS_KEY'),
     #                            aws_secret_key=os.getenv('AWS_SECRET_KEY'),
     #                            )
-    print(aws_parameters, input_lambda_name)
+    json_file={}
+    for name, param in aws_parameters.items():
+        json_file[param.name]=param.value
+
+    print(json_file, input_lambda_name)
 
 
 
@@ -28,4 +32,4 @@ if __name__ == '__main__':
     params = {**params_from_file, **params_inline}
     print('params',params)
     print(lambda_name)
-    # run(params, lambda_name)
+    run(params, lambda_name)
