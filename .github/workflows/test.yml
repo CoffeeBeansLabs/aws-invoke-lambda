@@ -23,6 +23,6 @@ jobs:
         uses: ./
         with:
           parameters: |
-            test=test
-            test1="test1"
+            {"test":"test",
+            "test1":"test1"}
           lambda-name: test-lambda
