@@ -25,4 +25,6 @@ if __name__ == '__main__':
         with open(path, 'r') as f:
             params_from_file = parse_input_params(f.read())
     params = {**params_from_file, **params_inline}
-    run(params, lambda_name)
+    print('params',params)
+    print(lambda_name)
+    # run(params, lambda_name)
