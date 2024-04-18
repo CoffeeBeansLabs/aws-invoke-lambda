@@ -6,14 +6,14 @@ from common.aws_clients import get_client
 
 
 def run(aws_parameters: dict[str, AwsParameter], input_lambda_name):
-    # lambda_client = get_client(service_name='lambda',
-    #                            region_name=os.getenv('AWS_REGION'),
-    #                            aws_access_key=os.getenv('AWS_ACCESS_KEY'),
-    #                            aws_secret_key=os.getenv('AWS_SECRET_KEY'),
-    #                            )
-    json_file=json_to_byte(aws_parameters)
-    print(json_file, input_lambda_name)
-
+    lambda_client = get_client(service_name='lambda',
+                               region_name=os.getenv('AWS_REGION'),
+                               aws_access_key=os.getenv('AWS_ACCESS_KEY'),
+                               aws_secret_key=os.getenv('AWS_SECRET_KEY'),
+                               )
+    json_byte = json_to_byte(aws_parameters)
+    lambda_client.invoke(FunctionName=input_lambda_name,
+                         Payload=json_byte)
 
 
 if __name__ == '__main__':
@@ -27,6 +27,4 @@ if __name__ == '__main__':
         with open(path, 'r') as f:
             params_from_file = parse_input_params(f.read())
     params = {**params_from_file, **params_inline}
-    print('params',params)
-    print(lambda_name)
     run(params, lambda_name)
