@@ -16,9 +16,8 @@ def run(aws_parameters: dict[str, AwsParameter], input_lambda_name):
     # lambda_client.invoke(FunctionName=input_lambda_name,
     #                      Payload=json_byte)
 
-    for name, param in aws_parameters.items():
-        print("name", name)
-        print("params", type(param))
+    dict_ = {name: param.value for name, param in aws_parameters.items()}
+    print(dict_)
 
 
 if __name__ == '__main__':
