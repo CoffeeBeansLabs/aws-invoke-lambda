@@ -12,8 +12,9 @@ def run(aws_parameters: dict[str, AwsParameter], input_lambda_name):
                                aws_secret_key=os.getenv('AWS_SECRET_KEY'),
                                )
     json_byte = json_to_byte(aws_parameters)
-    lambda_client.invoke(FunctionName=input_lambda_name,
-                         Payload=json_byte)
+    print(json_byte)
+    # lambda_client.invoke(FunctionName=input_lambda_name,
+    #                      Payload=json_byte)
 
 
 if __name__ == '__main__':
