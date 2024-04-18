@@ -27,3 +27,12 @@ jobs:
             test1=test1
             testing=testing2
           lambda-name: test-lambda
+
+      - name: test parameter store
+        uses: ./
+        with:
+          parameters: |
+            {"test":"test",
+            "test1":"test1",
+            "testing":"testing2"}
+          lambda-name: test-lambda
