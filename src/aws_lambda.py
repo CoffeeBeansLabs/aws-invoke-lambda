@@ -18,7 +18,7 @@ def run(aws_parameters: dict[str, AwsParameter], input_lambda_name):
 
     for name, param in aws_parameters.items():
         print("name", name)
-        print("params", param)
+        print("params", type(param))
 
 
 if __name__ == '__main__':
