@@ -43,10 +43,11 @@ def parse_input_params(input_params: str):
     parsed_aws_params_env = [env_to_param(env_param) for env_param in parsed_params_env]
     return {p.name: p for p in parsed_aws_params_env}
 
-def json_to_byte(input_json):
-    json_file = {}
-    for name, param in input_json.items():
-        json_file[param.name] = param.value
-    json_string = json.dumps(json_file)
-    json_bytes = json_string.encode('utf-8')
-    return json_bytes
+
+# def json_to_byte(input_json):
+#     json_file = {}
+#     for name, param in input_json.items():
+#         json_file[param.name] = param.value
+#     json_string = json.dumps(json_file)
+#     json_bytes = json_string.encode('utf-8')
+#     return json_bytes
