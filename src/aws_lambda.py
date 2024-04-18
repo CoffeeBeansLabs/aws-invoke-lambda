@@ -1,7 +1,7 @@
 import os
 import pathlib
 
-from inputs import AwsParameter, parse_input_params
+from inputs import AwsParameter, parse_input_params, json_to_byte
 from common.aws_clients import get_client
 
 
@@ -11,10 +11,7 @@ def run(aws_parameters: dict[str, AwsParameter], input_lambda_name):
     #                            aws_access_key=os.getenv('AWS_ACCESS_KEY'),
     #                            aws_secret_key=os.getenv('AWS_SECRET_KEY'),
     #                            )
-    json_file={}
-    for name, param in aws_parameters.items():
-        json_file[param.name]=param.value
-
+    json_file=json_to_byte(aws_parameters)
     print(json_file, input_lambda_name)
 
 
