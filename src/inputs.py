@@ -40,7 +40,7 @@ def parse_input_params(input_params: str):
 def json_to_byte(input_json):
     json_file = {}
     for name, param in input_json.items():
-        json_file[param.name] = param.value
+        json_file[param.name] = param['value']
     json_string = json.dumps(json_file)
     json_bytes = json_string.encode('utf-8')
     return json_bytes
