@@ -37,11 +37,13 @@ def value_to_aws_parameter(param_name, param_value):
 
 def parse_input_params(input_params: str):
     parsed_params_json = ensure_json_input(input_params)
+    print("parsed_params_json", parsed_params_json)
     if parsed_params_json is not None:
         return {key: value_to_aws_parameter(key, value) for key, value in parsed_params_json.items()}
     parsed_params_env = ensure_env_input(input_params)
+    print("parsed_params_env", parsed_params_env)
     parsed_aws_params_env = [env_to_param(env_param) for env_param in parsed_params_env]
-    return {p["name"]: p for p in parsed_aws_params_env}
+    return {p for p in parsed_aws_params_env}
 
 
 # def json_to_byte(input_json):

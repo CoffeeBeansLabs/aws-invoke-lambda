@@ -20,7 +20,9 @@ def run(aws_parameters, input_lambda_name):
 if __name__ == '__main__':
     input_params = os.getenv('INPUT_PARAMS')
     lambda_name = os.getenv('INPUT_LAMBDA_NAME')
+    print("input_params", input_params)
     params_inline = parse_input_params(input_params) if input_params is not None else {}
+    print("params_inline", params_inline)
     params_from_file = {}
     params_file_path = os.getenv('INPUT_PARAMS_FILE_PATH')
     if params_file_path is not None and params_file_path != "":
