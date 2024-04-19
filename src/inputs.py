@@ -1,11 +1,4 @@
 import json
-from dataclasses import dataclass
-
-
-@dataclass(init=True)
-class AwsParameter:
-    name: str
-    value: str
 
 
 def ensure_json_input(input_params: str):
@@ -16,10 +9,10 @@ def ensure_json_input(input_params: str):
         return None
 
 
-def env_to_param(env_line: str) -> AwsParameter:
+def env_to_param(env_line: str):
     env_line = env_line.strip()
     env_line = env_line.split(sep="=", maxsplit=1)
-    return AwsParameter(name=env_line[0], value=env_line[1])
+    return dict(name=env_line[0], value=env_line[1])
 
 
 def ensure_env_input(input_params: str):
@@ -30,9 +23,9 @@ def ensure_env_input(input_params: str):
 def value_to_aws_parameter(param_name, param_value):
     parsed_value_json = ensure_json_input(param_value)
     if parsed_value_json is None:
-        return AwsParameter(name=param_name, value=param_value)
+        return dict(name=param_name, value=param_value)
     value = parsed_value_json.get('value') if parsed_value_json.get('value') is not None else None
-    return AwsParameter(name=param_name, value=value)
+    return dict(name=param_name, value=value)
 
 
 def parse_input_params(input_params: str):

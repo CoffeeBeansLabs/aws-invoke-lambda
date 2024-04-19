@@ -1,11 +1,11 @@
 import os
 import pathlib
 
-from inputs import AwsParameter, parse_input_params, json_to_byte
+from inputs import parse_input_params, json_to_byte
 from common.aws_clients import get_client
 
 
-def run(aws_parameters: dict[str, AwsParameter], input_lambda_name):
+def run(aws_parameters, input_lambda_name):
     # lambda_client = get_client(service_name='lambda',
     #                            region_name=os.getenv('AWS_REGION'),
     #                            aws_access_key=os.getenv('AWS_ACCESS_KEY'),
