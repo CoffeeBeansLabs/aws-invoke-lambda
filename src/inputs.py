@@ -2,10 +2,10 @@ import json
 from dataclasses import dataclass
 
 
-# @dataclass(init=True)
-# class AwsParameter:
-#     name: str
-#     value: str
+@dataclass(init=True)
+class AwsParameter:
+    name: str
+    value: str
 
 
 def ensure_json_input(input_params: str):
@@ -16,10 +16,10 @@ def ensure_json_input(input_params: str):
         return None
 
 
-def env_to_param(env_line: str):
+def env_to_param(env_line: str) -> AwsParameter:
     env_line = env_line.strip()
     env_line = env_line.split(sep="=", maxsplit=1)
-    return {"name": env_line[0], "value": env_line[1]}
+    return AwsParameter(name=env_line[0], value=env_line[1])
 
 
 def ensure_env_input(input_params: str):
@@ -30,25 +30,24 @@ def ensure_env_input(input_params: str):
 def value_to_aws_parameter(param_name, param_value):
     parsed_value_json = ensure_json_input(param_value)
     if parsed_value_json is None:
-        return {"name": param_name, "value": param_value}
+        return AwsParameter(name=param_name, value=param_value)
     value = parsed_value_json.get('value') if parsed_value_json.get('value') is not None else None
-    return {"name": param_name, "value": value}
+    return AwsParameter(name=param_name, value=value)
 
 
 def parse_input_params(input_params: str):
     parsed_params_json = ensure_json_input(input_params)
-    print("parsed_params_json", parsed_params_json)
     if parsed_params_json is not None:
         return {key: value_to_aws_parameter(key, value) for key, value in parsed_params_json.items()}
     parsed_params_env = ensure_env_input(input_params)
-    print("parsed_params_env", parsed_params_env)
     parsed_aws_params_env = [env_to_param(env_param) for env_param in parsed_params_env]
-    print("parsed_aws_params_env", parsed_aws_params_env)
-    return {p['name'] for p in parsed_aws_params_env}
+    return {p.name: p for p in parsed_aws_params_env}
 
 
-# def json_to_byte(input_json):
-#     json_file = {name: param.value for name, param in input_json.items()}
-#     json_string = json.dumps(json_file)
-#     json_bytes = json_string.encode('utf-8')
-#     return json_bytes
+def json_to_byte(input_json):
+    json_file = {}
+    for name, param in input_json.items():
+        json_file[param.name] = param.value
+    json_string = json.dumps(json_file)
+    json_bytes = json_string.encode('utf-8')
+    return json_bytes
