@@ -1,34 +1,24 @@
 import os
 import pathlib
 
-from inputs import AwsParameter, parse_input_params
+from inputs import json_to_byte, ensure_json_input
 from common.aws_clients import get_client
 
 
-def run(aws_parameters: dict[str, AwsParameter], input_lambda_name):
+def run(aws_parameters, input_lambda_name):
     # lambda_client = get_client(service_name='lambda',
     #                            region_name=os.getenv('AWS_REGION'),
     #                            aws_access_key=os.getenv('AWS_ACCESS_KEY'),
     #                            aws_secret_key=os.getenv('AWS_SECRET_KEY'),
     #                            )
-    # json_byte = json_to_byte(aws_parameters)
-    # print(json_byte)
+    json_byte = json_to_byte(aws_parameters)
+    print(json_byte)
     # lambda_client.invoke(FunctionName=input_lambda_name,
     #                      Payload=json_byte)
-
-    dict_ = {name: param.value for name, param in aws_parameters.items()}
-    print(dict_)
 
 
 if __name__ == '__main__':
     input_params = os.getenv('INPUT_PARAMS')
     lambda_name = os.getenv('INPUT_LAMBDA_NAME')
-    params_inline = parse_input_params(input_params) if input_params is not None else {}
-    params_from_file = {}
-    params_file_path = os.getenv('INPUT_PARAMS_FILE_PATH')
-    if params_file_path is not None and params_file_path != "":
-        path = pathlib.PurePath(os.getenv('GITHUB_WORKSPACE'), params_file_path)
-        with open(path, 'r') as f:
-            params_from_file = parse_input_params(f.read())
-    params = {**params_from_file, **params_inline}
-    run(params, lambda_name)
+    parsed_value_json = ensure_json_input(input_params)
+    run(input_params, lambda_name)
