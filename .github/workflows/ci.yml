@@ -68,7 +68,11 @@ jobs:
         id: test-action
         uses: ./
         with:
-          who-to-greet: Mona Lisa Octocat
+          parameters: |
+            test=test
+            test1=test1
+            testing=testing2
+          lambda-name: test-lambda
 
       - name: Print Output
         id: output

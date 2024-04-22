@@ -1,11 +1,13 @@
-# Set the base image to use for subsequent instructions
-FROM alpine:3.19
+FROM python:3.12.3-slim
 
-# Set the working directory inside the container
+RUN apt-get update
+RUN pip install --upgrade pip
+
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
 WORKDIR /usr/src
 
-# Copy any source file(s) required for the action
-COPY entrypoint.sh .
+COPY ./src/ .
 
-# Configure the container to be run as an executable
-ENTRYPOINT ["/usr/src/entrypoint.sh"]
+ENTRYPOINT ["python", "/usr/src/aws_lambda.py"]

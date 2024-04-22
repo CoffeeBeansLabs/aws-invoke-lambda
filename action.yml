@@ -1,21 +1,22 @@
-name: coffeebeanslabs\hello-world
-description: Greet someone and record the time
-author: Coffeebeans Labs
+name: An action to invoke AWS lambda by CoffeeBeansLabs
+description: A Github action for invoke AWS lambda
 
-# Define your inputs here.
 inputs:
-  who-to-greet:
-    description: Who to greet
+  lambda-name:
+    description: Name of the lambda
     required: true
-    default: World
-
-# Define your outputs here.
-outputs:
-  time:
-    description: The time we greeted you
+  parameters:
+    description: 'Provide parameters as json or .env file format with each pair for one line.'
+    required: false
+  params-file:
+    description: 'Write params to a json file and provide the file path from github workspace root.'
+    required: false
 
 runs:
   using: docker
   image: Dockerfile
   env:
-    INPUT_WHO_TO_GREET: ${{ inputs.who-to-greet }}
+    INPUT_LAMBDA_NAME: ${{ inputs.lambda-name }}
+    INPUT_PARAMS: ${{ inputs.parameters }}
+    INPUT_PARAMS_FILE_PATH: ${{ inputs.params-file }}
+
