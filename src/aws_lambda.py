@@ -1,7 +1,8 @@
 import os
 import pathlib
+import json
 
-from inputs import parse_input_params, json_to_byte
+from inputs import parse_input_params
 from common.aws_clients import get_client
 
 
@@ -11,9 +12,9 @@ def run(aws_parameters, input_lambda_name):
                                aws_access_key=os.getenv('AWS_ACCESS_KEY'),
                                aws_secret_key=os.getenv('AWS_SECRET_KEY'),
                                )
-    json_byte = json_to_byte(aws_parameters)
+    json_bytes = json.dumps({key: value['value'] for key, value in aws_parameters.items()}).encode()
     lambda_client.invoke(FunctionName=input_lambda_name,
-                         Payload=json_byte)
+                         Payload=json_bytes)
 
 
 if __name__ == '__main__':
